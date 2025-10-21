@@ -1,0 +1,80 @@
+# ~/.bashrc: executed by bash(1) for non-login shells.
+# based on Pop!_OS defaults, see ./bashrc_old
+
+# If not running interactively, don't do anything
+case $- in
+    *i*) ;;
+      *) return;;
+esac
+
+shopt -s autocd		# Automatically cd into typed directory
+stty stop undef		# Disable ctrl-s to freeze terminal
+shopt -s checkwinsize	# Check window sizes after each command
+shopt -s globstar	# Use the pattern "**" to find all files and subdirectories
+
+HISTSIZE=10000
+HISTFILESIZE=2000
+HISTFILE="${XDG_CACHE_HOME:-$HOME/.cache}/bash/history"
+HISTCONTROL=ignoreboth	# Don't duplicate lines of lines starting with space
+shopt -s histappend	# Append to history, don't overwrite it
+
+# Load aliases and shortcuts if existent
+[ -f "${XDG_CONFIG_HOME:-$HOME/.config}/shell/aliasrc" ] && \
+	source "${XDG_CONFIG_HOME:-$HOME/.config}/shell/aliasrc" \
+|| \
+	[ -f ~/.bash_aliases ] && source ~/.bash_aliases
+
+
+# Enable programmable completion features 
+! shopt -oq posix && { \
+	[ -f /usr/share/bash-completion/bash_completion ] && \
+		source /usr/share/bash-completion/bash_completion \
+	|| \
+  	[ -f /etc/bash_completion ] && \
+		source /etc/bash_completion \
+; }
+
+# make LESS(1) more friendly for non-text input files, see lesspipe(1)
+[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
+
+# set variable identifying the chroot you work in (used in the prompt below)
+[ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ] && \
+	debian_chroot=$(cat /etc/debian_chroot)
+
+# set a fancy prompt (non-color, unless we know we "want" color)
+case "$TERM" in
+    xterm-color|*-256color) color_prompt=yes;;
+esac
+
+# colored prompt, if the terminal has the capability
+force_color_prompt=yes
+
+[ -n "$force_color_prompt" ] && [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null && {
+	# We have color support; assume it's compliant with Ecma-48
+	color_prompt=yes
+} || { 
+	color_prompt=
+}
+
+[ "$color_prompt" = yes ] && \
+	PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ ' \
+|| \
+	PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
+unset color_prompt force_color_prompt
+
+# colored GCC warnings and errors
+export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
+
+
+# If this is an xterm set the title to user@host:dir
+[ "$TERM" = xterm ] || [ "$TERM" = rxvt ] && \
+	PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
+
+# tput(1) variables for colored LESS(1) and MAN(1) output:
+export MANPAGER="less --RAW-CONTROL-CHARS --LONG-PROMPT --squeeze-blank-lines"
+export MANPAGER="less"
+export LESS="--RAW-CONTROL-CHARS"
+[ -n "$TERM" ] && \
+[ -f  "${XDG_CONFIG_HOME:-$HOME/.config}/shell/LESS_TERMCAP" ] && \
+	source "${XDG_CONFIG_HOME:-$HOME/.config}/shell/LESS_TERMCAP"
+export GROFF_NO_SGR=1		# for konsole and gnome-terminal

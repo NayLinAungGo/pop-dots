@@ -1,0 +1,78 @@
+#!/bin/bash
+
+# Verbosity and settings
+alias \
+	cp='cp -iv' \
+	mv='mv -iv' \
+	rm="rm -Iv" \
+	df="df -h" \
+	du='du -h -d 1' \
+	bc='bc -ql' \
+	mkdir='mkdir -pv' \
+	yt='yt-dlp --embed-metadata --ignore-errors' \
+	yta='yt --extract-qudio -f bestaudio/best' \
+	ytt='yt --skip-download --write-thumbnail' \
+	ffmpeg='ffmpeg -hide_banner'
+
+# Colorize commands when possible
+[ -x /usr/bin/dircolors ] && {
+	[ -r ~/.dircolors ] && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+	alias \
+		ls='ls -hN --color=auto --group-directories-first' \
+		dir='dir --color=auto' \
+		vdir='vdir --color=auto' \
+		\
+		grep='grep --color=auto' \
+		fgrep='fgrep --color=auto' \
+		egrep='egrep --color=auto'
+	}
+alias \
+	diff='diff --color=auto' \
+	ip='ip -color=auto'
+
+# Command abbreviations
+alias \
+	sdn='shutdown -h now' \
+\
+	ll='ls -alF' \
+	la='ls -A' \
+	l='ls -CF' \
+\
+	ai='sudo apt install' \
+	au='sudo apt update' \
+	ag='sudo apt upgrade' \
+	aug='sudo apt update && sudo apt upgrade' \
+	are='sudo apt remove' \
+	ase='apt search' \
+	ap='apt-cache show' \
+\
+	e='$EDITOR' \
+	v='$EDITOR' \
+	sv='sudo $EDITOR' \
+	ka='killall' \
+	SS='sudo systemctl' \
+	g='git' \
+	z='zathura' \
+	q='qalc' \
+	neofetch='fastfetch -c neofetch.jsonc'
+# Flatpak
+alias \
+	flatin='flatpak install flathub' \
+	flatup='flatpak update' \
+	flatun='flatpak uninstall' \
+	flatls='flatpak list' \
+	flatse='flatpak search' \
+	flatps='flatpak ps' \
+	flatka='flatpak kill'
+# TeX
+alias \
+	Txa='cp "${XDG_TEMPLATES_DIR:-$HOME/Templates}/LaTeX/article.tex"' \
+	Txn='cp "${XDG_TEMPLATES_DIR:-$HOME/Templates}/LaTeX/notes.tex"'
+
+# My diary
+alias journal='cd "${XDG_DOCUMENTS_DIR:-$HOME/Documents}/journal" && ${VISUAL:-vim} .'
+
+# Add an "alert" alias for long running commands
+alias alert='notify-send --urgency=critical --expire-time=0 \
+	--icon="$([ $? = 0 ] && echo terminal || echo error)" \
+	"$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'

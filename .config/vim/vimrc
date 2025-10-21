@@ -1,0 +1,79 @@
+let mapleader =","
+
+set title
+set mouse=a
+set noruler
+
+syntax on
+filetype plugin on
+set encoding=utf8
+set spelllang=en
+set number relativenumber
+" Enable autocompletion:
+	set wildmode=longest,list,full
+" Disables automatic commenting on newline:
+	autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
+" Splits open at the bottom and right
+	set splitbelow splitright
+
+set runtimepath+=n$XDG_CONFIG_HOME/vim,n$XDG_CONFIG_HOME/vim/after
+set viminfofile=$XDG_STATE_HOME/vim/viminfo
+
+" Shortcutting split navigation, saving a keypress:
+	map <C-h> <C-w>h
+	map <C-j> <C-w>j
+	map <C-k> <C-w>k
+	map <C-l> <C-w>l
+
+" Replace ex mode with gq
+	map Q gq
+
+" Replace all is aliased to S.
+	nnoremap S :%s//g<Left><Left>
+
+if &term =~ '^xterm\|rxvt'
+	" Blinking vertical bar in insert mode  
+	let &t_SI = "\<Esc>[5 q"
+	" Underline in replace mode
+	let &t_SI .= "\<Esc>[4 q"
+	" Solid block in other modes
+	let &t_EI .= "\<Esc>[2 q"
+endif
+if &term =~ "xterm"
+	let &t_SI = "\<Esc>[5 q"
+	let &t_SR = "\<Esc>[4 q"
+	let &t_EI = "\<Esc>[2 q"
+endif
+
+
+call plug#begin()
+
+Plug 'tpope/vim-fugitive'
+
+Plug 'lervag/vimtex'
+let g:tex_flavor='latex'
+filetype plugin indent on
+syntax enable
+let g:vimtex_compiler_method = 'latexmk'
+let g:vimtex_compiler_latexmk = {
+    \ 'out_dir' : 'build',
+    \ 'options' : [
+    \     '-shell-escape',
+    \     '-file-line-error',
+    \     '-pdflatex=pdflatex -synctex=1',
+    \     '-interaction=nonstopmode',
+    \ ],
+\ }
+let g:vimtex_view_method='zathura'
+let maplocalleader=","
+let g:vimtex_quickfix_mode=0
+set conceallevel=1
+let g:tex_conceal='abdmg'
+
+Plug 'sirver/ultisnips'
+let g:UltiSnipsExpandTrigger = '<tab>'
+let g:UltiSnipsJumpForwardTrigger = '<tab>'
+let g:UltiSnipsJumpBackwardTrigger = '<s-tab>'
+let g:UltiSnipsSnippetDirectories=[$HOME.'/.config/nvim/UltiSnips']
+
+call plug#end()
