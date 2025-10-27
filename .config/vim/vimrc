@@ -11,6 +11,8 @@ set spelllang=en
 set number relativenumber
 " Enable autocompletion:
 	set wildmode=longest,list,full
+" Set double-space indenting for shell scripts
+	autocmd FileType sh setlocal shiftwidth=2 tabstop=2 expandtab
 " Disables automatic commenting on newline:
 	autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
 " Splits open at the bottom and right
@@ -71,9 +73,9 @@ set conceallevel=1
 let g:tex_conceal='abdmg'
 
 Plug 'sirver/ultisnips'
-let g:UltiSnipsExpandTrigger = '<tab>'
-let g:UltiSnipsJumpForwardTrigger = '<tab>'
-let g:UltiSnipsJumpBackwardTrigger = '<s-tab>'
-let g:UltiSnipsSnippetDirectories=[$HOME.'/.config/nvim/UltiSnips']
+let g:UltiSnipsExpandTrigger       = '<Tab>'    " use Tab to expand snippets
+let g:UltiSnipsJumpForwardTrigger  = '<Tab>'    " use Tab to move forward through tabstops
+let g:UltiSnipsJumpBackwardTrigger = '<S-Tab>'  " use Shift-Tab to move backward through tabstops
+let g:UltiSnipsSnippetDirectories=[$HOME.'/.config/vim/UltiSnips']
 
 call plug#end()
