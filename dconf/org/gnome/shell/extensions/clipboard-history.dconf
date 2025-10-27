@@ -1,0 +1,8 @@
+[/]
+clear-history=['<Control>F10']
+display-mode=1
+move-item-first=false
+next-entry=['<Control>F12']
+prev-entry=['<Control>F11']
+private-mode=false
+toggle-menu=['<Super>v']
