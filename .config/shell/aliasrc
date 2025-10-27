@@ -6,8 +6,8 @@ alias \
 	mv='mv -iv' \
 	rm="rm -Iv" \
 	df="df -h" \
-	du='du -h -d 1' \
-	bc='bc -ql' \
+	du='du -h --max-depth=1' \
+	bc='bc -q --mathlib' \
 	mkdir='mkdir -pv' \
 	yt='yt-dlp --embed-metadata --ignore-errors' \
 	yta='yt --extract-qudio -f bestaudio/best' \
