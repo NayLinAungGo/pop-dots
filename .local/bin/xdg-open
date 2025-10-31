@@ -1,0 +1,20 @@
+#!/bin/sh
+
+# _DOMAIN_LIST are set to open in the corresponding _BROWSER
+# It's safer to set each URL then to open all .onion links in TOR
+TOR_DOMAIN_LIST="jvgypgbnfyvfopg5msp6nwr2sl2fd6xmnguq35n7rfkw3yungjn2i4yd.onion" # Debian Onion Index
+CHROME_DOMAIN_LIST="accounts.google.com|maps.google.com|youtube.com"
+
+TOR_BROWSER='/opt/tor-browser/Browser/start-tor-browser --detach'
+CHROME_BROWSER='/usr/bin/flatpak run --command=/app/bin/chrome com.google.Chrome'
+
+# fallback: real xdg-open
+XDG_OPEN='/usr/bin/xdg-open'
+
+# ENSURE input is a URL. IF NOT, execute fallback and EXIT.
+echo "$1" | grep --quiet --extended-regexp --ignore-case "https?://" || exec $XDG_OPEN "$@"
+
+# CHECK for domain. IF MATCHED, open it in the corresponding browser. IF NOT fallback.
+echo "$1" | grep -qEi "https?://([^/]*\.)?($CHROME_DOMAIN_LIST)(/|\?|#|$)" && exec $CHROME_BROWSER "$@" || \
+echo "$1" | grep -qEi "https?://([^/]*\.)?($TOR_DOMAIN_LIST)(/|\?|#|$)" && exec $TOR_BROWSER "$@" || \
+	exec $XDG_OPEN "$@" 
