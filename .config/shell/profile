@@ -50,7 +50,7 @@ export TEXMFVAR="$XDG_CACHE_HOME/texmf"
 export HISTFILE="$XDG_DATA_HOME/history"
 export LESSHISTFILE="$XDG_CACHE_HOME/less/history"
 
-export TIME="$(date '+%_I:%M %p %t %e %b %Y %a')"
+export TIME="$(printf '%(%_I:%M %p %t %e %b %Y %a)T\n' -1)"
 
 # Other program settings:
 export MOZ_USE_XINPUT2=1	# Mozilla smooth scrolling/touchpads.

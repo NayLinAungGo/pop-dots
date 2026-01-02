@@ -3,14 +3,14 @@
 
 # If not running interactively, don't do anything
 case $- in
-    *i*) ;;
-      *) return;;
+	*i*) ;;
+	  *) return;;
 esac
 
-shopt -s autocd		# Automatically cd into typed directory
-stty stop undef		# Disable ctrl-s to freeze terminal
+shopt -s autocd			# Automatically cd into typed directory
+stty stop undef			# Disable ctrl-s to freeze terminal
 shopt -s checkwinsize	# Check window sizes after each command
-shopt -s globstar	# Use the pattern "**" to find all files and subdirectories
+shopt -s globstar		# Use the pattern "**" to find all files and subdirectories
 
 HISTSIZE=10000
 HISTFILESIZE=2000
@@ -30,7 +30,7 @@ shopt -s histappend	# Append to history, don't overwrite it
 	[ -f /usr/share/bash-completion/bash_completion ] && \
 		source /usr/share/bash-completion/bash_completion \
 	|| \
-  	[ -f /etc/bash_completion ] && \
+	[ -f /etc/bash_completion ] && \
 		source /etc/bash_completion \
 ; }
 

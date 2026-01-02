@@ -2,25 +2,28 @@ $include /etc/inputrc
 set editing-mode vi
 
 $if mode=vi
+	$if term=linux
+		set vi-ins-mode-string \1\e[?3c\2
+		set vi-cmd-mode-string \1\e[?6c\2
+	$else
+		set vi-ins-mode-string \1\e[5 q\2
+		set vi-cmd-mode-string \1\e[1 q\2
+	$endif
 	set show-mode-in-prompt on
-	set vi-ins-mode-string \1\e[5 q\2
-	set vi-cmd-mode-string \1\e[1 q\2
 	
 	set keymap vi-command
-	# for vi-command mode
-	Control-l: clear-screen
-	Control-a: beginning-of-line
-	Control-e: end-of-line
-	Control-u: unix-line-discard
-	Control-k: kill-line
-	"\e.": yank-last-arg
+		Control-l: clear-screen
 	
 	set keymap vi-insert
-	# for vi-insert mode
-	Control-l: clear-screen
-	Control-a: beginning-of-line
-	Control-e: end-of-line
-	Control-u: unix-line-discard
-	Control-k: kill-line
-	"\e.": yank-last-arg
+		Control-l: clear-screen
+		Control-a: beginning-of-line
+		Control-e: end-of-line
+		Control-f: forward-char
+		Control-b: backward-char
+		"\ef": forward-word
+		"\eb": backward-word
+		Control-u: unix-line-discard
+		Control-k: kill-line
+		"\e.": yank-last-arg
+		"jk": vi-movement-mode
 $endif

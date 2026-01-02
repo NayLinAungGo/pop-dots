@@ -9,10 +9,9 @@ filetype plugin on
 set encoding=utf8
 set spelllang=en
 set number relativenumber
+set tabstop=4 shiftwidth=4
 " Enable autocompletion:
 	set wildmode=longest,list,full
-" Set double-space indenting for shell scripts
-	autocmd FileType sh setlocal shiftwidth=2 tabstop=2 expandtab
 " Disables automatic commenting on newline:
 	autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
 " Splits open at the bottom and right
@@ -21,17 +20,23 @@ set number relativenumber
 set runtimepath+=n$XDG_CONFIG_HOME/vim,n$XDG_CONFIG_HOME/vim/after
 set viminfofile=$XDG_STATE_HOME/vim/viminfo
 
+" jk to escape insert mode:
+	inoremap jk <Esc>
+
 " Shortcutting split navigation, saving a keypress:
 	map <C-h> <C-w>h
 	map <C-j> <C-w>j
 	map <C-k> <C-w>k
 	map <C-l> <C-w>l
 
-" Replace ex mode with gq
+" Replace ex mode with gq:
 	map Q gq
 
-" Replace all is aliased to S.
+" Replace all is aliased to S:
 	nnoremap S :%s//g<Left><Left>
+
+" Auto-closing braces:
+	inoremap {<cr> {<cr>}<c-o>O
 
 if &term =~ '^xterm\|rxvt'
 	" Blinking vertical bar in insert mode  
@@ -69,8 +74,6 @@ let g:vimtex_compiler_latexmk = {
 let g:vimtex_view_method='zathura'
 let maplocalleader=","
 let g:vimtex_quickfix_mode=0
-set conceallevel=1
-let g:tex_conceal='abdmg'
 
 Plug 'sirver/ultisnips'
 let g:UltiSnipsExpandTrigger       = '<Tab>'    " use Tab to expand snippets
