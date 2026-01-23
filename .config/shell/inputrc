@@ -14,29 +14,39 @@ $if mode=vi
 	
 	# Emacs Mode rebinds for VI Mode; see READLINE(3)
 	set keymap vi-insert
-		Control-L: clear-screen
-		Control-B: backward-char
-		Control-F: forward-char
-		Meta-B: backward-word
-		Meta-F: forward-word
-		Control-A: beginning-of-line
-		Control-E: end-of-line
+		"\C-L": clear-screen
+		"\C-B": backward-char
+		"\C-F": forward-char
+		"\eb": backward-word
+		"\ef": forward-word
+		"\C-A": beginning-of-line
+		"\C-E": end-of-line
 
 	set keymap vi-insert
-		Control-K: kill-line
-		Meta-D: kill-word
-		Meta-Y: yank-pop
-		Meta-Control-Y: yank-nth-arg
-		"Meta+.": yank-last-arg
+		"\C-K": kill-line
+		"\ed": kill-word
+		"\e\C-Y": yank-nth-arg
+		"\e.": yank-last-arg
 
 	set keymap vi-insert
-		Control-N:  next-history
-		Control-P:  previous-history
-		Meta-N:  non-incremental-forward-search-history
-		Meta-P:  non-incremental-reverse-search-history
+		"\C-N": next-history
+		"\C-P": previous-history
+		"\en": non-incremental-forward-search-history
+		"\ep": non-incremental-reverse-search-history
 		# Abort the reverse search; restore original line.
-		Control-G: abort
+		"\C-G": abort
 
 	set keymap vi-insert
 		"jk": vi-movement-mode
 $endif
+
+# Color files by types
+set colored-stats On
+# Append char to indicate type
+set visible-stats On
+# Mark symlinked directories
+set mark-symlinked-directories On
+# Color the common prefix
+set colored-completion-prefix On
+# Color the common prefix in menu-complete
+set menu-complete-display-prefix On
