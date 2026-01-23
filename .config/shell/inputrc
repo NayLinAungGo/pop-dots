@@ -1,4 +1,5 @@
 $include /etc/inputrc
+
 set editing-mode vi
 
 $if mode=vi
@@ -11,19 +12,31 @@ $if mode=vi
 	$endif
 	set show-mode-in-prompt on
 	
-	set keymap vi-command
-		Control-l: clear-screen
-	
+	# Emacs Mode rebinds for VI Mode; see READLINE(3)
 	set keymap vi-insert
-		Control-l: clear-screen
-		Control-a: beginning-of-line
-		Control-e: end-of-line
-		Control-f: forward-char
-		Control-b: backward-char
-		"\ef": forward-word
-		"\eb": backward-word
-		Control-u: unix-line-discard
-		Control-k: kill-line
-		"\e.": yank-last-arg
+		Control-L: clear-screen
+		Control-B: backward-char
+		Control-F: forward-char
+		Meta-B: backward-word
+		Meta-F: forward-word
+		Control-A: beginning-of-line
+		Control-E: end-of-line
+
+	set keymap vi-insert
+		Control-K: kill-line
+		Meta-D: kill-word
+		Meta-Y: yank-pop
+		Meta-Control-Y: yank-nth-arg
+		"Meta+.": yank-last-arg
+
+	set keymap vi-insert
+		Control-N:  next-history
+		Control-P:  previous-history
+		Meta-N:  non-incremental-forward-search-history
+		Meta-P:  non-incremental-reverse-search-history
+		# Abort the reverse search; restore original line.
+		Control-G: abort
+
+	set keymap vi-insert
 		"jk": vi-movement-mode
 $endif
