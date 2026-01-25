@@ -94,10 +94,9 @@ export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quo
 	PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
 
 # tput(1) variables for colored LESS(1) and MAN(1) output:
-export MANPAGER="less --RAW-CONTROL-CHARS --LONG-PROMPT --squeeze-blank-lines"
-export MANPAGER="less"
 export LESS="--RAW-CONTROL-CHARS"
+export MANPAGER="less --LONG-PROMPT --squeeze-blank-lines"
 [ -n "$TERM" ] && \
-[ -f  "${XDG_CONFIG_HOME:-$HOME/.config}/shell/LESS_TERMCAP" ] && \
-	source "${XDG_CONFIG_HOME:-$HOME/.config}/shell/LESS_TERMCAP"
+	[ -f  "${XDG_CONFIG_HOME:-$HOME/.config}/shell/LESS_TERMCAP" ] && \
+		source "${XDG_CONFIG_HOME:-$HOME/.config}/shell/LESS_TERMCAP"
 export GROFF_NO_SGR=1		# for konsole and gnome-terminal
