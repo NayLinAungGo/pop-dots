@@ -41,6 +41,7 @@ export WINEPREFIX="$XDG_DATA_HOME/wineprefixes/default"
 export FFMPEG_DATADIR="$XDG_CONFIG_HOME/ffmpeg"
 export ANDROID_SDK_HOME="$XDG_CONFIG_HOME/android"
 export GNUPGHOME="$XDG_DATA_HOME/gnupg"
+export PYTHON_HISTORY="$XDG_STATE_HOME/python_history"
 export _JAVA_OPTIONS=-Djava.util.prefs.userRoot="$XDG_CONFIG_HOME"/java
 # TeX
 export TEXMFHOME="$XDG_DATA_HOME/texmf"
