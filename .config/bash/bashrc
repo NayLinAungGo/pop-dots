@@ -1,5 +1,5 @@
 # ~/.bashrc: executed by bash(1) for non-login shells.
-# based on Pop!_OS defaults, see ./bashrc_old
+# based on Pop!_OS defaults at ./bashrc_old
 
 # If not running interactively, don't do anything
 case $- in
@@ -12,40 +12,18 @@ stty stop undef			# Disable ctrl-s to freeze terminal
 shopt -s checkwinsize	# Check window sizes after each command
 shopt -s globstar		# Use the pattern "**" to find all files and subdirectories
 
-# Set up fzf key bindings and fuzzy completion if supported
-command -v "fzf" > /dev/null 2>&1 && {
-	# Check if version is more or equal to 0.48.0
-	printf "0.48.0\n%s" "$(fzf --version 2>/dev/null | cut -d ' ' -f1)" | \
-		sort --version-sort --check \
-	&& {
-	command -v "fd" > /dev/null 2>&1 && {
-			export FD_OPTIONS="--hidden --follow --glob --exclude .git"
-			[ -f "${XDG_CONFIG_HOME:-$HOME/.config}/fd/ignore" ] && \
-				export FD_OPTIONS="$FD_OPTIONS --ignore-file ${XDG_CONFIG_HOME:-$HOME/.config}/fd/ignore"
-
-			# The first argument to the function ($1) is the base path to start traversal
-			_fzf_compgen_path() { fd --exclude . "$1"; }
-			# Use fd to generate the list for directory completion
-			_fzf_compgen_dir() { fd --type directory --exclude . "$1"; }
-			export FZF_DEFAULT_COMMAND="fd --type file"
-			export FZF_CTRL_R_COMMAND=""	# Disabled
-			export FZF_ALT_C_COMMAND="fd --type directory"
-		}
-	eval "$(fzf --bash)"
-	}
-}
-
 HISTSIZE=10000
 HISTFILESIZE=2000
 HISTFILE="${XDG_CACHE_HOME:-$HOME/.cache}/bash/history"
 HISTCONTROL=ignoreboth	# Don't duplicate lines of lines starting with space
-shopt -s histappend	# Append to history, don't overwrite it
+shopt -s histappend		# Append to history, don't overwrite it
 
 # Load aliases and shortcuts if existent
 [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/shell/aliasrc" ] && \
 	source "${XDG_CONFIG_HOME:-$HOME/.config}/shell/aliasrc" \
 || \
-	{ [ -f ~/.bash_aliases ] && source ~/.bash_aliases; }
+	{ [ -f "$HOME/.bash_aliases" ] && \
+		source "$HOME/.bash_aliases"; }
 
 
 # Enable programmable completion features 
@@ -58,11 +36,13 @@ shopt -oq posix || {
 }
 
 # make LESS(1) more friendly for non-text input files, see lesspipe(1)
-[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
+[ -x /usr/bin/lesspipe ] && \
+	eval "$(SHELL=/bin/sh lesspipe)"
 
 # set variable identifying the chroot you work in (used in the prompt below)
-[ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ] && \
-	debian_chroot=$(cat /etc/debian_chroot)
+[ -z "${debian_chroot:-}" ] && \
+	[ -r /etc/debian_chroot ] && \
+		debian_chroot=$(cat /etc/debian_chroot)
 
 # set a fancy prompt (non-color, unless we know we "want" color)
 case "$TERM" in
@@ -73,7 +53,7 @@ esac
 force_color_prompt=yes
 
 [ -n "$force_color_prompt" ] && [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null && {
-	# We have color support; assume it's compliant with Ecma-48
+	# If color is supported; assume it's compliant with Ecma-48
 	color_prompt=yes
 } || { 
 	color_prompt=
@@ -93,10 +73,40 @@ export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quo
 [ "$TERM" = xterm ] || [ "$TERM" = rxvt ] && \
 	PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
 
-# tput(1) variables for colored LESS(1) and MAN(1) output:
+# tput(1) variables for colored less(1) and man(1) output:
 export LESS="--RAW-CONTROL-CHARS"
 export MANPAGER="less --LONG-PROMPT --squeeze-blank-lines"
 [ -n "$TERM" ] && \
 	[ -f  "${XDG_CONFIG_HOME:-$HOME/.config}/shell/LESS_TERMCAP" ] && \
 		source "${XDG_CONFIG_HOME:-$HOME/.config}/shell/LESS_TERMCAP"
 export GROFF_NO_SGR=1		# for konsole and gnome-terminal
+
+
+# Set up fzf key bindings and fuzzy completion if supported
+command -v "fzf" > /dev/null 2>&1 && {
+	# Check if version is more or equal to 0.48.0
+	printf "0.48.0\n%s" "$(fzf --version 2>/dev/null | cut -d ' ' -f1)" | \
+		sort --version-sort --check \
+	&& {
+	command -v "fd" > /dev/null 2>&1 && {
+			export FD_OPTIONS="--hidden --follow --glob --exclude .git"
+			[ -f "${XDG_CONFIG_HOME:-$HOME/.config}/fd/ignore" ] && \
+				export FD_OPTIONS="$FD_OPTIONS --ignore-file ${XDG_CONFIG_HOME:-$HOME/.config}/fd/ignore"
+
+			# The first argument to the function ($1) is the base path to start traversal
+			# Trigger sequence file completion for running things like vim **<tab>
+			_fzf_compgen_path() {
+				fd --hidden --follow --exclude ".git" . "$1"
+			}
+			# Trigger sequence directory completion for running things like cd **<tab>
+			_fzf_compgen_dir() {
+				fd --type directory --hidden --follow --exclude ".git" . "$1"
+			}
+			export FZF_DEFAULT_COMMAND="fd --type file --hidden" # Not used by shell integration
+			export FZF_CTRL_T_COMMAND="fd --type file --hidden"
+			export FZF_CTRL_R_COMMAND=""	# Disabled
+			export FZF_ALT_C_COMMAND="fd --type directory --hidden"
+		}
+	eval "$(fzf --bash)"
+	}
+}
