@@ -8,9 +8,7 @@ runtime! vimrc.d/*.vim
 set runtimepath+=n$XDG_CONFIG_HOME/vim,n$XDG_CONFIG_HOME/vim/after
 set viminfofile=$XDG_STATE_HOME/vim/viminfo
 
-let g:netrw_banner=0
 colorscheme gruvbox
-
 " Transparent background
 	highlight! Normal ctermbg=NONE guibg=NONE
 	highlight! NonText ctermbg=NONE guibg=NONE
