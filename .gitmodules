@@ -1,0 +1,3 @@
+[submodule ".config/vim/pack/plugins/start/traces.vim"]
+	path = .config/vim/pack/plugins/start/traces.vim
+	url = https://github.com/markonm/traces.vim

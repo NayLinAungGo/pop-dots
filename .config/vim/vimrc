@@ -10,3 +10,7 @@ set viminfofile=$XDG_STATE_HOME/vim/viminfo
 
 let g:netrw_banner=0
 colorscheme gruvbox
+
+" Transparent background
+	highlight! Normal ctermbg=NONE guibg=NONE
+	highlight! NonText ctermbg=NONE guibg=NONE
