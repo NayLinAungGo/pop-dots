@@ -13,7 +13,7 @@
 
 - dconf dumps:
     - Pop\!\_OS's uses dconf files for it's GNOME configurations
-    - Useful dconf dumps relating to pop-shell configs, keybinds and gnome-terminal profile are stored in [`dconf`](/.dconf)
+    - Useful dconf dumps relating to pop-shell configs, keybinds and gnome-terminal profile are stored in [`dconf`](/dconf)
 
 ## Desktop background
 
