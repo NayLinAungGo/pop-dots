@@ -46,12 +46,13 @@ alias \
 	ase='apt search' \
 	ap='apt-cache show' \
 \
-	e='$EDITOR' \
-	v='$EDITOR' \
-	sv='sudo $EDITOR' \
+	#e='$EDITOR' \
+	#v='$EDITOR' \
+	#sv='sudo $EDITOR' \
+	#g='git'
+alias \
 	ka='killall' \
 	SS='sudo systemctl' \
-	g='git' \
 	z='zathura' \
 	q='qalc' \
 	neofetch='fastfetch -c neofetch.jsonc'
