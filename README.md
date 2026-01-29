@@ -8,8 +8,12 @@
     - and other programs I use
 
 - To be complaint with XDG Base Directory Specification:
-    - All configs are in [.config](/.config)
-    - Environment variables are set in [.config/shell/profile](/.config/shell/profile)
+    - All configs are in [`.config`](/.config)
+    - Environment variables are set in [`.config/shell/profile`](/.config/shell/profile)
+
+- dconf dumps:
+    - Pop\!\_OS's uses dconf files for it's GNOME configurations
+    - Useful dconf dumps relating to pop-shell configs, keybinds and gnome-terminal profile are stored in [`dconf`](/.dconf)
 
 ## Desktop background
 
