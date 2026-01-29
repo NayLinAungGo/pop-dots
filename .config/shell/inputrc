@@ -23,6 +23,7 @@ $if mode=vi
 		"\C-E": end-of-line
 
 	set keymap vi-insert
+		"\C-W": unix-word-rubout
 		"\C-K": kill-line
 		"\ed": kill-word
 		"\e\C-Y": yank-nth-arg
