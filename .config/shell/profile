@@ -33,7 +33,7 @@ export XDG_DATA_HOME="$HOME/.local/share"
 export XDG_STATE_HOME="$HOME/.local/state"
 
 export GTK2_RC_FILES="$XDG_CONFIG_HOME/gtk-2.0/gtkrc-2.0" # gtk 3 & 4 are XDG compliant
-export VIMINIT="source $XDG_CONFIG_HOME/vim/vimrc"
+#export VIMINIT="source $XDG_CONFIG_HOME/vim/vimrc" # Neovim also read
 export XINITRC="$XDG_CONFIG_HOME/x11/xinitrc"
 export WGETRC="$XDG_CONFIG_HOME/wget/wgetrc"
 export INPUTRC="$XDG_CONFIG_HOME/shell/inputrc"
