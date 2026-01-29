@@ -14,13 +14,13 @@ let mapleader =" "
 	vnoremap S :s//g<Left><Left>
 
 " Auto-closing braces:
-	inoremap {<cr> {<cr>}<c-o>O
+	inoremap {CR> {CR>}<c-o>O
 
 " Paste without replacing the buffer
-	xnoremap <leader>p "_dP
+	xnoremap <Leader>p "_dP
 
 " Spell-check
-	map <leader>o :setlocal spell!<CR>
+	map <Leader>o :setlocal spell!<CR>
 
 " Function for toggling the bottom statusbar:
 let s:hidden_all = 1
@@ -39,4 +39,4 @@ function! ToggleHiddenAll()
         set showcmd
     endif
 endfunction
-nnoremap <leader>h :call ToggleHiddenAll()<CR>
+nnoremap <silent> <Leader>h :call ToggleHiddenAll()<CR>
