@@ -1,7 +1,5 @@
 syntax on
 filetype plugin indent on
-" Disables automatic commenting on newline:
-	autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
 
 let &rtp .= ',~/.config/vim'
 runtime! vimrc.d/*.vim
