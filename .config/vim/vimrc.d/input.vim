@@ -14,7 +14,7 @@ let mapleader =" "
 	vnoremap S :s//g<Left><Left>
 
 " Auto-closing braces:
-	inoremap {CR> {CR>}<c-o>O
+	inoremap {<CR> {<CR>}<Esc>O
 
 " Paste without replacing the buffer
 	xnoremap <Leader>p "_dP
@@ -40,3 +40,6 @@ function! ToggleHiddenAll()
     endif
 endfunction
 nnoremap <silent> <Leader>h :call ToggleHiddenAll()<CR>
+
+" Disables automatic commenting on newline:
+	autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
