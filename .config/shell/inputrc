@@ -1,5 +1,10 @@
 $include /etc/inputrc
 
+# Proper handling of meta keys and international characters
+set input-meta on
+set output-meta on
+set convert-meta off
+
 set editing-mode vi
 
 $if mode=vi
@@ -23,7 +28,6 @@ $if mode=vi
 		"\C-E": end-of-line
 
 	set keymap vi-insert
-		"\C-W": unix-word-rubout
 		"\C-K": kill-line
 		"\ed": kill-word
 		"\e\C-Y": yank-nth-arg

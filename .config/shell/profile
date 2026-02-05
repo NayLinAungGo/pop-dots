@@ -6,9 +6,12 @@
 #umask 022
 
 # if running bash include .bashrc if it exists
-[ -n "$BASH_VERSION" ] && \
+[ -n "$BASH_VERSION" ] && (
 	[ -f "$HOME/.bashrc" ] && \
-		source "$HOME/.bashrc"
+		source "$HOME/.bashrc" ) \
+	|| (
+	[ -f "${XDG_CACHE_HOME:-$HOME/.cache}/bash/bashrc" ] && \
+		source "${XDG_CACHE_HOME:-$HOME/.cache}/bash/bashrc" )
 
 # set PATH so it includes user's private bin if it exists
 [ -d "$HOME/bin" ] && \
@@ -26,11 +29,11 @@ export TERMINAL="gnome-terminal"
 export TERMINAL_PROG="$TERMINAL"
 export BROWSER="firefox"
 
-# ~/ Clean-up:
-export XDG_CACHE_HOME="$HOME/.cache"
-export XDG_CONFIG_HOME="$HOME/.config"
-export XDG_DATA_HOME="$HOME/.local/share"
-export XDG_STATE_HOME="$HOME/.local/state"
+# XDG Directories:
+export XDG_CACHE_HOME="${XDG_CACHE_HOME:-$HOME/.cache}"
+export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
+export XDG_DATA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"
+export XDG_STATE_HOME="${XDG_STATE_HOME:-$HOME/.local/state}"
 
 export GTK2_RC_FILES="$XDG_CONFIG_HOME/gtk-2.0/gtkrc-2.0" # gtk 3 & 4 are XDG compliant
 #export VIMINIT="source $XDG_CONFIG_HOME/vim/vimrc" # Neovim also read
@@ -43,12 +46,14 @@ export ANDROID_SDK_HOME="$XDG_CONFIG_HOME/android"
 export GNUPGHOME="$XDG_DATA_HOME/gnupg"
 export PYTHON_HISTORY="$XDG_STATE_HOME/python_history"
 export _JAVA_OPTIONS=-Djava.util.prefs.userRoot="$XDG_CONFIG_HOME"/java
+export PARALLEL_HOME="$XDG_CONFIG_HOME"/parallel
 # TeX
 export TEXMFHOME="$XDG_DATA_HOME/texmf"
 export TEXMFCONFIG="$XDG_CONFIG_HOME/texmf"
 export TEXMFVAR="$XDG_CACHE_HOME/texmf"
 
-export HISTFILE="$XDG_DATA_HOME/history"
+#export HISTFILE="$XDG_DATA_HOME/history"
+export HISTFILE="$XDG_STATE_HOME/bash/history"
 export LESSHISTFILE="$XDG_CACHE_HOME/less/history"
 
 export TIME="$(printf '%(%_I:%M %p %t %e %b %Y %a)T\n' -1)"
