@@ -35,6 +35,7 @@ shopt -oq posix || {
 		source /etc/bash_completion;
 }
 
+
 # make LESS(1) more friendly for non-text input files, see lesspipe(1)
 [ -x /usr/bin/lesspipe ] && \
 	eval "$(SHELL=/bin/sh lesspipe)"
@@ -82,31 +83,44 @@ export MANPAGER="less --LONG-PROMPT --squeeze-blank-lines"
 export GROFF_NO_SGR=1		# for konsole and gnome-terminal
 
 
-# Set up fzf key bindings and fuzzy completion if supported
+# Set up fzf(1) key bindings and fuzzy completion if supported
 command -v "fzf" > /dev/null 2>&1 && {
-	# Check if version is more or equal to 0.48.0
-	printf "0.48.0\n%s" "$(fzf --version 2>/dev/null | cut -d ' ' -f1)" | \
-		sort --version-sort --check \
-	&& {
-	command -v "fd" > /dev/null 2>&1 && {
-			export FD_OPTIONS="--hidden --follow --glob --exclude .git"
-			[ -f "${XDG_CONFIG_HOME:-$HOME/.config}/fd/ignore" ] && \
-				export FD_OPTIONS="$FD_OPTIONS --ignore-file ${XDG_CONFIG_HOME:-$HOME/.config}/fd/ignore"
+	# Check if fzf(1) version is more or equal to 0.48.0 (required for fzf --bash)
+	printf "0.48.0\n%s" "$(fzf --version 2>/dev/null | cut -d ' ' -f1)" | sort --version-sort --check && {
+		command -v "fd" > /dev/null 2>&1 && {
+			# Set fd(1) as default source for fzf
+			export FZF_DEFAULT_COMMAND="fd --strip-cwd-prefix --hidden --follow --type file" # Not used by shell integration
+			export FZF_CTRL_T_COMMAND="fd --hidden --follow --type file"
+			export FZF_ALT_C_COMMAND="fd --hidden --follow --type directory"
 
 			# The first argument to the function ($1) is the base path to start traversal
-			# Trigger sequence file completion for running things like vim **<tab>
-			_fzf_compgen_path() {
-				fd --hidden --follow --exclude ".git" . "$1"
-			}
-			# Trigger sequence directory completion for running things like cd **<tab>
-			_fzf_compgen_dir() {
-				fd --type directory --hidden --follow --exclude ".git" . "$1"
-			}
-			export FZF_DEFAULT_COMMAND="fd --type file --hidden" # Not used by shell integration
-			export FZF_CTRL_T_COMMAND="fd --type file --hidden"
-			export FZF_CTRL_R_COMMAND=""	# Disabled
-			export FZF_ALT_C_COMMAND="fd --type directory --hidden"
-		}
+			# Completion source for path completion (e.g. vim **<TAB>)
+			_fzf_compgen_path() { fd --hidden --follow --exclude ".git" . "$1"; }
+			# Completion source for directory completion (e.g. cd **<TAB>)
+			_fzf_compgen_dir() { fd --hidden --follow --type directory --exclude ".git" . "$1"; }
+		} 
+	export FZF_CTRL_R_COMMAND="" # Disabled
+
+	export FZF_DEFAULT_OPTS="--style=minimal --layout=reverse --height=~40% --info=inline-right --no-scrollbar --no-separator"
+	export FZF_CTRL_T_OPTS="--select-1 --exit-0 $(
+		# Preview files with fzf-preview.sh which utilizes bat(1), chafa(1), imgcat(1) if installed
+		command -v fzf-preview.sh > /dev/null 2>&1 && \
+			echo -n "--preview='fzf-preview.sh {}' --bind 'focus:transform-header:file --brief {}'"
+		)"
+	export FZF_ALT_C_OPTS="$(
+		# Preview directories with tree(1) if installed
+		command -v tree > /dev/null 2>&1 && {
+			echo -n '--preview "tree -a -L 2 --gitignore --noreport --filelimit 250 -F -C {}"'
+		} || echo -n '--preview "ls -A -F {}"' # Or else fall back to ls(1)
+	)"
+
+	# Options to fuzzy completion
+	export FZF_COMPLETION_OPTS="--style minimal --info=inline-right"
+	# Options for path completion (e.g. vim **<TAB>)
+	export FZF_COMPLETION_PATH_OPTS=""
+	# Options for directory completion (e.g. cd **<TAB>)
+	export FZF_COMPLETION_DIR_OPTS="--walker dir,follow,hidden"
+
 	eval "$(fzf --bash)"
 	}
 }
