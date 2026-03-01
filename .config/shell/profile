@@ -35,26 +35,31 @@ export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
 export XDG_DATA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"
 export XDG_STATE_HOME="${XDG_STATE_HOME:-$HOME/.local/state}"
 
-export GTK2_RC_FILES="$XDG_CONFIG_HOME/gtk-2.0/gtkrc-2.0" # gtk 3 & 4 are XDG compliant
+export GTK2_RC_FILES="$XDG_CONFIG_HOME"/gtk-2.0/gtkrc-2.0 # gtk 3 & 4 are XDG compliant
 #export VIMINIT="source $XDG_CONFIG_HOME/vim/vimrc" # Neovim also read
-export XINITRC="$XDG_CONFIG_HOME/x11/xinitrc"
-export WGETRC="$XDG_CONFIG_HOME/wget/wgetrc"
-export INPUTRC="$XDG_CONFIG_HOME/shell/inputrc"
-export WINEPREFIX="$XDG_DATA_HOME/wineprefixes/default"
-export FFMPEG_DATADIR="$XDG_CONFIG_HOME/ffmpeg"
-export ANDROID_SDK_HOME="$XDG_CONFIG_HOME/android"
-export GNUPGHOME="$XDG_DATA_HOME/gnupg"
-export PYTHON_HISTORY="$XDG_STATE_HOME/python_history"
+export XINITRC="$XDG_CONFIG_HOME"/x11/xinitrc
+export WGETRC="$XDG_CONFIG_HOME"/wget/wgetrc
+export INPUTRC="$XDG_CONFIG_HOME"/shell/inputrc
+export WINEPREFIX="$XDG_DATA_HOME"/wineprefixes/default
+export FFMPEG_DATADIR="$XDG_CONFIG_HOME"/ffmpeg
+export ANDROID_SDK_HOME="$XDG_CONFIG_HOME"/android
+export GNUPGHOME="$XDG_DATA_HOME"/gnupg
+export SCREENRC="$XDG_CONFIG_HOME"/screen/screenrc
+export SCREENDIR="${XDG_RUNTIME_DIR}"/screen
+export GDBHISTFILE="$XDG_DATA_HOME"/gdb/history
+export PYTHON_HISTORY="$XDG_STATE_HOME"/python_history
+export NODE_REPL_HISTORY="$XDG_DATA_HOME"/node_repl_history
+export NPM_CONFIG_USERCONFIG="$XDG_CONFIG_HOME"/npm/npmrc
+export NVM_DIR="$HOME"/.config/nvm
 export _JAVA_OPTIONS=-Djava.util.prefs.userRoot="$XDG_CONFIG_HOME"/java
 export PARALLEL_HOME="$XDG_CONFIG_HOME"/parallel
 # TeX
-export TEXMFHOME="$XDG_DATA_HOME/texmf"
-export TEXMFCONFIG="$XDG_CONFIG_HOME/texmf"
-export TEXMFVAR="$XDG_CACHE_HOME/texmf"
+export TEXMFHOME="$XDG_DATA_HOME"/texmf
+export TEXMFCONFIG="$XDG_CONFIG_HOME"/texmf
+export TEXMFVAR="$XDG_CACHE_HOME"/texmf
 
-#export HISTFILE="$XDG_DATA_HOME/history"
-export HISTFILE="$XDG_STATE_HOME/bash/history"
-export LESSHISTFILE="$XDG_CACHE_HOME/less/history"
+export HISTFILE="$XDG_STATE_HOME"/bash/history
+export LESSHISTFILE="$XDG_CACHE_HOME"/less/history
 
 export TIME="$(printf '%(%_I:%M %p %t %e %b %Y %a)T\n' -1)"
 

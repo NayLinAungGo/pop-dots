@@ -56,6 +56,10 @@ alias \
 	z='zathura' \
 	q='qalc' \
 	neofetch='fastfetch -c neofetch.jsonc'
+
+# Git root traversal
+alias grp='cd $(git rev-parse --show-toplevel)'
+
 # Flatpak
 alias \
 	flatin='flatpak install flathub' \
@@ -69,6 +73,7 @@ alias \
 alias \
 	Txa='cp "${XDG_TEMPLATES_DIR:-$HOME/Templates}/LaTeX/article.tex"' \
 	Txn='cp "${XDG_TEMPLATES_DIR:-$HOME/Templates}/LaTeX/notes.tex"'
+alias yarn='yarn --use-yarnrc "$XDG_CONFIG_HOME/yarn/config"'
 
 # My diary
 alias journal='cd "${XDG_DOCUMENTS_DIR:-$HOME/Documents}/journal" && ${VISUAL:-vim} .'
