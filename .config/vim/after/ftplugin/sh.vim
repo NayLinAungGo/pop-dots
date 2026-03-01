@@ -1,4 +1,7 @@
 " Check file in shellcheck:
-	map <leader>s :!clear && shellcheck -x %<CR>
+	noremap <leader>s <Cmd>!clear && shellcheck %<CR>
+
+" Make current script executable
+	nnoremap <leader>x <cmd>!chmod +x %<CR>
 
 compiler shellcheck
