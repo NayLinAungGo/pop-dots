@@ -1,13 +1,26 @@
 let mapleader =" "
+set keymap=burmese iminsert=0
 
 " Escape insert mode:
 	inoremap jk <Esc>
 
+" Escape terminal mode:
+"	tnoremap jk <C-\><C-N>
+
+" Copy from current cursor position to the end of the line
+" Makes Y work analogously to `D` and `C` (Not vi compatible)
+	noremap Y y$
+
 " Shortcutting split navigation, saving a keypress:
-	map <C-h> <C-w>h
-	map <C-j> <C-w>j
-	map <C-k> <C-w>k
-	map <C-l> <C-w>l
+"	map <C-h> <C-w>h
+"	map <C-j> <C-w>j
+"	map <C-k> <C-w>k
+"	map <C-l> <C-w>l
+"augroup netrw_mapping
+"    autocmd!
+"	" <C-l> in netrw is mapped to netrw-refresh by default
+"    autocmd filetype netrw nnoremap <buffer> <C-l> <C-w>l<CR>
+"augroup END
 
 " Replace all is aliased to S:
 	"nnoremap S :%s//g<Left><Left>
@@ -20,7 +33,15 @@ let mapleader =" "
 	xnoremap <Leader>p "_dP
 
 " Spell-check
-	map <Leader>o :setlocal spell!<CR>
+	map <Leader>o <Cmd>setlocal spell!<CR>
+
+" List bufers and prompt for selection
+	nnoremap <Leader><Enter> <Cmd>buffers<CR>:b<Space>
+
+nnoremap <Leader>bn <Cmd>bnext<CR>
+nnoremap <Leader>bp <Cmd>bprevious<CR>
+nnoremap <Leader>bd <Cmd>bdelete<CR>
+nnoremap <Leader>bl <Cmd>buffers<CR>
 
 " Function for toggling the bottom statusbar:
 let s:hidden_all = 1
@@ -39,7 +60,7 @@ function! ToggleHiddenAll()
         set showcmd
     endif
 endfunction
-nnoremap <silent> <Leader>h :call ToggleHiddenAll()<CR>
+nnoremap <silent> <Leader>h <Cmd>call ToggleHiddenAll()<CR>
 
 " Disables automatic commenting on newline:
 	autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o

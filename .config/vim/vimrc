@@ -1,5 +1,6 @@
 syntax on
 filetype plugin indent on
+autocmd BufNewFile,BufFilePre,BufRead *.md set filetype=markdown
 
 let &rtp .= ',~/.config/vim'
 runtime! vimrc.d/*.vim

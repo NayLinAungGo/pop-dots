@@ -6,5 +6,6 @@ let g:netrw_liststyle = 3
 let g:netrw_winsize = -25
 let g:netrw_special_syntax = 1
 
+let g:netrw_home = $HOME . '/.local/share/vim'
 
 nnoremap <silent> <Leader>e :Lexplore<CR>
